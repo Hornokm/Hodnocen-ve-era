@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel u Broučka - Hodnocení večera</title>
+    <!-- Přidání odkazů na Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif; 
+            background-image: url('https://pm1.aminoapps.com/7561/af7a8339dd67b2e826e6662b105075d1af47052er1-600-544v2_hq.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #fff;   
+        }
+               
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+            margin-top: 20px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            max-width: 300px;
+            height: auto;
+        }
+        
+        header h2 {
+            font-family: 'Pacifico', cursive; /* Použití Pacifico pro nadpis */
+            color: #ff6f61;
+            margin-top: 10px;
+            font-size: 2rem; /* Zvětšeno pro zvýraznění */
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        
+        label {
+            margin-bottom: 5px;
+            color: #ff6f61;
+            display: block;
+        }
+        
+        textarea, input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #f2f2f2;
+            color: #333;
+            resize: vertical;
+            font-size: 1rem;
+            box-sizing: border-box; /* Důležité pro správné počítání rozměrů s paddingem a borderem */
+            margin: 5px 0; /* Přidání marginu pro oddělení */
+        }
+
+        .stars {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        
+        .star {
+            font-size: 2rem;
+            color: #ccc;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .star:hover,
+        .star.active {
+            color: #ff6f61;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background: #ff6f61;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        button:hover {
+            background: #e65a50;
+        }
+        
+        .rating-info {
+            font-size: 0.8rem;
+            color: #ccc;
+            margin-top: 5px;
+        }
+        
+        .response-container {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95); /* Lehké zesvětlení pro lepší kontrast */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            display: none;
+            text-align: center; /* Zarovnání textu doleva */
+        }
+        
+        .response-container.visible {
+            display: block;
+        }
+        
+        #response {
+            font-size: 1rem;
+            color: #333;
+        }
+        
+        .divider {
+            margin: 40px 0;
+            border: none;
+            border-top: 1px solid #ccc;
+            opacity: 0.5;
+        }
+        
+        footer {
+            margin-top: 20px;
+            color: #ccc;
+        }
+        
+        footer p {
+            margin: 0;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="https://cdna.artstation.com/p/assets/images/images/065/904/440/large/nareg-timbol-asrabian-love-is-strongest-key-art-jpeg2.jpg?1691524290" alt="Hotel u Broučka" class="logo">
+            <h2>Hodnocení večera</h2>
+        </header>
+        <main>
+            <form id="ratingForm">
+                <div class="form-group">
+                    <label for="whatWasGood">Co bylo dobré:</label>
+                    <textarea id="whatWasGood" name="whatWasGood" rows="4" cols="50" aria-label="Co bylo dobré"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="whatToImprove">Co by se dalo zlepšit:</label>
+                    <textarea id="whatToImprove" name="whatToImprove" rows="4" cols="50" aria-label="Co by se dalo zlepšit"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="rating">Hvězdičkové hodnocení:</label>
+                    <div class="stars">
+                        <span class="star" data-value="1">★</span>
+                        <span class="star" data-value="2">★</span>
+                        <span class="star" data-value="3">★</span>
+                        <span class="star" data-value="4">★</span>
+                        <span class="star" data-value="5">★</span>
+                    </div>
+                    <div class="rating-info">
+                        <span class="rating-hint">Kliknutím vyberte počet hvězdiček (1 - 5).</span>
+                    </div>
+                    <input type="hidden" id="rating" name="rating">
+                </div>
+                <button type="submit">Odeslat hodnocení</button>
+            </form>
+            <div class="response-container hidden">
+                <div id="response"></div>
+            </div>
+        </main>
+        <hr class="divider">
+        <footer>
+            <p>&copy; MYŠÁČEK.SRO</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const stars = document.querySelectorAll('.star');
+            const ratingInput = document.getElementById('rating');
+
+            stars.forEach(star => {
+                star.addEventListener('mouseover', function() {
+                    const value = this.getAttribute('data-value');
+                    highlightStars(value);
+                });
+
+                star.addEventListener('mouseleave', function() {
+                    const rating = ratingInput.value;
+                    highlightStars(rating);
+                });
+
+                star.addEventListener('click', function() {
+                    const value = this.getAttribute('data-value');
+                    ratingInput.value = value;
+                    highlightStars(value);
+                });
+            });
+
+            function highlightStars(value) {
+                stars.forEach(star => {
+                    if (star.getAttribute('data-value') <= value) {
+                        star.classList.add('active');
+                    } else {
+                        star.classList.remove('active');
+                    }
+                });
+            }
+
+            document.getElementById('ratingForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                const whatWasGood = document.getElementById('whatWasGood').value.trim();
+                const whatToImprove = document.getElementById('whatToImprove').value.trim();
+                const rating = ratingInput.value.trim();
+                
+                if (!whatWasGood || !whatToImprove || !rating) {
+                    alert('Prosím, vyplňte všechna pole a vyberte hvězdičkové hodnocení.');
+                    return;
+                }
+            
+                let responseText = "<h2>Děkujeme za hodnocení!</h2>";
+                responseText += `<p><strong>Co bylo dobré:</strong> ${whatWasGood}</p>`;
+                responseText += `<p><strong>Co by se dalo zlepšit:</strong> ${whatToImprove}</p>`;
+                responseText += `<p><strong>Hvězdičkové hodnocení:</strong> ${rating} / 5</p>`;
+                
+                document.getElementById('response').innerHTML = responseText;
+                document.querySelector('.response-container').classList.add('visible');
+            });
+        });
+    </script>
+</body>
+</html>
+
